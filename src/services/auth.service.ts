@@ -1,16 +1,19 @@
 import { hash, compare } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import { SECRET_KEY } from '@config';
-import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
+import { User, UserRole, UserStatus } from '@interfaces/users.interface';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
+import { LoginUserDto, SignUpUserDto } from '@/dtos/users.dto';
+import ProfileModel from '@/models/profiles.model';
+import { split } from 'lodash';
 
 class AuthService {
-  public async signup(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
+  public async signup(userData: SignUpUserDto): Promise<boolean> {
+    if (isEmpty(userData))
+      throw new HttpException(400, 'body cannot empty is empty');
 
     const findUser: User = await userModel.findOne({ email: userData.email });
     if (findUser)
@@ -19,17 +22,26 @@ class AuthService {
         `This email ${userData.email} already exists`,
       );
 
-    const hashedPassword = await hash(userData.password, 10);
-    const createUserData: User = await userModel.create({
-      ...userData,
-      password: hashedPassword,
-    });
+    const { email, password, role, status, firstName, lastName } = userData;
+    const hashedPassword = await hash(password, 12);
+    await Promise.all([
+      userModel.create({
+        email,
+        password: hashedPassword,
+        role: role || UserRole.USER,
+        status: status || UserStatus.ACTIVE,
+      }),
+      ProfileModel.create({
+        firstName: firstName,
+        lastName: lastName || split(email, '@')[0],
+      }),
+    ]);
 
-    return createUserData;
+    return true;
   }
 
   public async login(
-    userData: CreateUserDto,
+    userData: LoginUserDto,
   ): Promise<{ cookie: string; findUser: User }> {
     if (isEmpty(userData)) throw new HttpException(400, 'userData is empty');
 

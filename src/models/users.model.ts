@@ -15,10 +15,10 @@ class User {
   @prop({ type: Date, default: new Date() })
   public updatedAt?: Date;
 
-  @prop({ type: String, required: true })
+  @prop({ type: String, required: true, default: UserRole.USER })
   public role: UserRole;
 
-  @prop({ type: String, required: true })
+  @prop({ type: String, required: true, default: UserStatus.ACTIVE })
   public status: UserStatus;
 }
 

@@ -1,6 +1,6 @@
 tags:
-- name: users
-  description: users API
+- name: list API
+  description: all API
 
 paths:
 # [GET] users
@@ -100,6 +100,30 @@ paths:
         500:
           description: 'Server Error'
 
+# [POST] /api/user/sign-up
+  /api/user/sign-up:
+    post:
+      tags:
+      - auth
+      summary: Create New Account
+      parameters:
+      - name: body
+        in: body
+        description: Sign-up Body
+        required: true
+        schema:
+          $ref: '#/definitions/sign-up'
+      responses:
+        201:
+          description: 'Created'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
 # definitions
 definitions:
   users:
@@ -114,6 +138,30 @@ definitions:
       password:
         type: string
         description: user Password
+  
+  sign-up:
+    type: object
+    required:
+        - email
+        - password
+    optional:
+        - firstName
+        - lastName
+        - role
+        - status
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
+      role:
+        type: string
+      status:
+        type: string
 
 schemes:
  - https
