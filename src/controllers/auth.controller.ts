@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
-import { LoginUserDto, SignUpUserDto } from '@dtos/users.dto';
+import {
+  CheckEmailExistDto,
+  LoginUserDto,
+  SignUpUserDto,
+} from '@dtos/users.dto';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
@@ -44,6 +48,20 @@ class AuthController {
 
       res.setHeader('Set-Cookie', ['Authorization=; Max-age=0']);
       res.status(200).json({ data: logOutUserData, message: 'logout' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public CheckEmailExist = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { email }: CheckEmailExistDto = req.body;
+      const result = await this.authService.checkEmailExist(email);
+      res.status(200).json({ exist: result });
     } catch (error) {
       next(error);
     }
