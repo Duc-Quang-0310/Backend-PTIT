@@ -30,3 +30,8 @@ export class SignUpUserDto {
   @IsIn([UserStatus.ACTIVE, UserStatus.BAN, UserStatus.IN_ACTIVE])
   public status?: UserStatus;
 }
+
+export class CheckEmailExistDto {
+  @IsEmail()
+  public email: string;
+}

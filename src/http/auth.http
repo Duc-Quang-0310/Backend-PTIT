@@ -9,8 +9,8 @@ Content-Type: application/json
 {
     "email": "example@email.com",
     "password": "password"
-    "firstName": "John" | "undefined",
-    "lastName": "Doe" | "undefined",
+    "firstName": "John",
+    "lastName": "Doe",
     "role": "User",
     "status": "Active"
 }
@@ -29,3 +29,12 @@ Content-Type: application/json
 # User Logout
 POST {{ baseURL }}/log-out
 Content-Type: application/json
+
+###
+# Validate Email
+POST {{ baseURL }}/email-check
+Content-Type: application/json
+
+{
+    "email": "example@email.com",
+}

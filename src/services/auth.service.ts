@@ -95,6 +95,11 @@ class AuthService {
   public createCookie(tokenData: TokenData): string {
     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
   }
+
+  public async checkEmailExist(email: string): Promise<boolean> {
+    const findUser: User = await userModel.findOne({ email });
+    return !!findUser;
+  }
 }
 
 export default AuthService;
