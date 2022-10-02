@@ -7,7 +7,7 @@ import { User, UserRole, UserStatus } from '@interfaces/users.interface';
 import userModel from '@models/users.model';
 import { isEmpty } from '@utils/util';
 import { LoginUserDto, SignUpUserDto } from '@/dtos/users.dto';
-import ProfileModel from '@/models/profiles.model';
+import ProfileModel, { DEFAULT_IMG_LINK } from '@/models/profiles.model';
 import { split } from 'lodash';
 
 class AuthService {
@@ -24,6 +24,7 @@ class AuthService {
 
     const { email, password, role, status, firstName, lastName } = userData;
     const hashedPassword = await hash(password, 12);
+    const mail = split(email, '@')[0];
     await Promise.all([
       userModel.create({
         email,
@@ -33,7 +34,8 @@ class AuthService {
       }),
       ProfileModel.create({
         firstName: firstName,
-        lastName: lastName || split(email, '@')[0],
+        lastName: lastName || mail,
+        avatar: DEFAULT_IMG_LINK,
       }),
     ]);
 
