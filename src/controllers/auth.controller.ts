@@ -10,13 +10,12 @@ class AuthController {
   public signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: SignUpUserDto = req.body;
-      const { email, password } = userData;
-      const signUpUserData: User = await this.authService.signup({
-        email,
-        password,
-      });
+      const signUpUserData = await this.authService.signup(userData);
 
-      res.status(201).json({ data: signUpUserData, message: 'signup' });
+      res.status(201).json({
+        success: signUpUserData,
+        message: 'Tạo mới tài khoản thành công',
+      });
     } catch (error) {
       next(error);
     }
