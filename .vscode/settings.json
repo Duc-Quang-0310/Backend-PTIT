@@ -4,6 +4,7 @@
   },
   "editor.formatOnSave": false,
   "cSpell.words": [
+    "dtos",
     "middlewares"
   ]
 }
