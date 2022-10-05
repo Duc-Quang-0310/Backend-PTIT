@@ -7,6 +7,8 @@ import {
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
+import { logger } from '@/utils/logger';
+import { HttpException } from '@/exceptions/HttpException';
 
 class AuthController {
   public authService = new AuthService();
@@ -28,10 +30,15 @@ class AuthController {
   public logIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userData: LoginUserDto = req.body;
-      const { cookie, findUser } = await this.authService.login(userData);
+      const { accessToken, refreshToken, userInfo } =
+        await this.authService.login(userData);
 
-      res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findUser, message: 'login' });
+      res.status(200).json({
+        data: userInfo,
+        message: 'Bạn đã tạo tài khoản thành công',
+        accessToken,
+        refreshToken,
+      });
     } catch (error) {
       next(error);
     }
@@ -62,6 +69,17 @@ class AuthController {
       const { email }: CheckEmailExistDto = req.body;
       const result = await this.authService.checkEmailExist(email);
       res.status(200).json({ exist: result });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public regenerateAccessToken = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
     } catch (error) {
       next(error);
     }

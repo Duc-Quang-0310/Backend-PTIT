@@ -13,3 +13,8 @@ export interface TokenData {
 export interface RequestWithUser extends Request {
   user: User;
 }
+
+export enum TokenType {
+  ACCESS = 'Access',
+  REFRESH = 'Refresh',
+}
