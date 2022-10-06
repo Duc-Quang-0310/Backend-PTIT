@@ -155,6 +155,10 @@ class AuthService {
     const findUser: User = await userModel.findOne({ email });
     return !!findUser;
   }
+
+  public async genNewToken(user: User): Promise<string> {
+    return this.generateToken(user.email, TokenType.ACCESS);
+  }
 }
 
 export default AuthService;
