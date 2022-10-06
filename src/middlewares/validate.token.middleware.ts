@@ -15,20 +15,33 @@ enum JWTAlgorithm {
 const validateRefreshTokenInfo = async (
   email: string,
   jwtToken: string,
-): Promise<boolean> => {
+): Promise<{
+  success: boolean;
+  user?: User;
+}> => {
   const currentUser: User = await UserModel.findOne({ email });
   const token = currentUser.token;
 
   if (currentUser === null) {
-    return false;
+    return {
+      success: false,
+    };
   }
   if (token === null) {
-    return false;
+    return {
+      success: false,
+    };
   }
   if (token.trim() !== jwtToken.trim()) {
-    return false;
+    return {
+      success: false,
+    };
   }
-  return true;
+
+  return {
+    success: false,
+    user: currentUser,
+  };
 };
 
 const validateExpireToken = async (
@@ -54,8 +67,10 @@ const validateExpireToken = async (
 
       if (type === TokenType.REFRESH) {
         const passAllCase = await validateRefreshTokenInfo(userEmail, jwtToken);
-        if (!passAllCase)
+        if (!passAllCase.success) {
+          req['user'] = passAllCase?.user || {};
           return next(new HttpException(401, `${type} Token Expired`));
+        }
       }
       return next();
     } catch (error) {

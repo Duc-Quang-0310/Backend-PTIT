@@ -7,8 +7,6 @@ import {
 import { RequestWithUser } from '@interfaces/auth.interface';
 import { User } from '@interfaces/users.interface';
 import AuthService from '@services/auth.service';
-import { logger } from '@/utils/logger';
-import { HttpException } from '@/exceptions/HttpException';
 
 class AuthController {
   public authService = new AuthService();
@@ -80,6 +78,11 @@ class AuthController {
     next: NextFunction,
   ) => {
     try {
+      const user = req.user;
+      const token = await this.authService.genNewToken(user);
+      res.status(200).json({
+        token,
+      });
     } catch (error) {
       next(error);
     }
