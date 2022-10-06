@@ -1,5 +1,6 @@
 export interface Profiles {
   _id: string;
+  userId: string;
   firstName?: string;
   lastName?: string;
   dob?: string;

@@ -15,6 +15,7 @@ import ProfileModel, { DEFAULT_IMG_LINK } from '@/models/profiles.model';
 import { split } from 'lodash';
 import { logger } from '@/utils/logger';
 import env from '@/config/env';
+import { Profiles } from '@/interfaces/profiles.interface';
 
 class AuthService {
   public async signup(userData: SignUpUserDto): Promise<boolean> {
@@ -23,56 +24,60 @@ class AuthService {
 
     const findUser: User = await userModel.findOne({ email: userData.email });
     if (findUser)
-      throw new HttpException(
-        409,
-        `This email ${userData.email} already exists`,
-      );
+      throw new HttpException(409, `Email ${userData.email} đã tồn tại`);
 
     const { email, password, role, status, firstName, lastName } = userData;
     const hashedPassword = await hash(password, 12);
     const mail = split(email, '@')[0];
+
+    const newUser: User = await userModel.create({
+      email,
+      password: hashedPassword,
+      role: role || UserRole.USER,
+      status: status || UserStatus.ACTIVE,
+    });
+
     await Promise.all([
-      userModel.create({
-        email,
-        password: hashedPassword,
-        role: role || UserRole.USER,
-        status: status || UserStatus.ACTIVE,
-      }),
       ProfileModel.create({
         firstName: firstName,
         lastName: lastName || mail,
         avatar: DEFAULT_IMG_LINK,
+        userId: newUser._id,
       }),
     ]);
 
     return true;
   }
 
-  public async login(
-    userData: LoginUserDto,
-  ): Promise<{ accessToken: string; refreshToken: string; userInfo: User }> {
+  public async login(userData: LoginUserDto): Promise<{
+    accessToken: string;
+    refreshToken: string;
+    userInfo: User;
+    profile: Profiles;
+  }> {
     if (isEmpty(userData)) throw new HttpException(400, 'Input is empty');
 
     const userInfo: User = await userModel.findOne({ email: userData.email });
     if (!userInfo)
-      throw new HttpException(
-        409,
-        `This email ${userData.email} was not found`,
-      );
+      throw new HttpException(409, `Email ${userData.email} không tồn tại`);
 
     const isPasswordMatching: boolean = await compare(
       userData.password,
       userInfo.password,
     );
     if (!isPasswordMatching)
-      throw new HttpException(409, 'Password is not matching');
+      throw new HttpException(409, 'Sai tài khoản hoặc mật khẩu');
 
     const accessToken = await this.generateToken(
       userInfo.email,
       TokenType.ACCESS,
     );
+    const profile: Profiles = await ProfileModel.findOne({
+      userId: userInfo._id,
+    });
+
     const refreshToken = await this.generateRefreshToken(userInfo);
-    return { accessToken, refreshToken, userInfo };
+    return { accessToken, refreshToken, userInfo, profile };
   }
 
   public async generateToken(email: string, type: TokenType) {
@@ -154,6 +159,10 @@ class AuthService {
   public async checkEmailExist(email: string): Promise<boolean> {
     const findUser: User = await userModel.findOne({ email });
     return !!findUser;
+  }
+
+  public async genNewToken(user: User): Promise<string> {
+    return this.generateToken(user.email, TokenType.ACCESS);
   }
 }
 
