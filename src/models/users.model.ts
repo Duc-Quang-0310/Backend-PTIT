@@ -20,6 +20,9 @@ class User {
 
   @prop({ type: String, required: true, default: UserStatus.ACTIVE })
   public status: UserStatus;
+
+  @prop({ type: String })
+  public token?: string;
 }
 
 const UserModel = getModelForClass(User);

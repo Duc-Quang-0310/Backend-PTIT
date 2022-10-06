@@ -18,4 +18,5 @@ export interface User {
   updatedAt?: Date;
   role: UserRole;
   status: UserStatus;
+  token?: string;
 }

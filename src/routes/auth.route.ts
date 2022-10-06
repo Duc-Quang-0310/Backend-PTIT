@@ -8,6 +8,8 @@ import {
 import { Routes } from '@interfaces/routes.interface';
 import authMiddleware from '@middlewares/auth.middleware';
 import validationMiddleware from '@middlewares/validation.middleware';
+import validateExpireToken from '@/middlewares/validate.token.middleware';
+import authenRegenerate from '@/middlewares/regenerate.middleware';
 
 class AuthRoute implements Routes {
   public path = '/api/user/';
@@ -38,6 +40,12 @@ class AuthRoute implements Routes {
       `${this.path}email-check`,
       validationMiddleware(CheckEmailExistDto, 'body'),
       this.authController.CheckEmailExist,
+    );
+    this.router.post(
+      `${this.path}gen-new-token`,
+      validateExpireToken,
+      authenRegenerate,
+      this.authController.regenerateAccessToken,
     );
   }
 }

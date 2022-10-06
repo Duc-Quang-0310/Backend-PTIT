@@ -1,11 +1,19 @@
 import { UserRole, UserStatus } from '@/interfaces/users.interface';
-import { IsEmail, IsString, IsOptional, IsIn } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsIn,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class LoginUserDto {
   @IsEmail()
+  @IsNotEmpty()
   public email: string;
 
   @IsString()
+  @IsNotEmpty()
   public password: string;
 }
 
