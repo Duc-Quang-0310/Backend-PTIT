@@ -1,0 +1,93 @@
+# baseURL
+@baseURL = http://localhost:5000/api/laptop
+
+###
+# Find All Laptops
+GET {{ baseURL }}
+
+
+###
+# Delete Laptop
+DELETE {{ baseURL }}/634ff94537e762a6783967cd
+
+###
+# Update Laptop
+PUT {{ baseURL }}/6350017b94159dd369e431a9
+Content-Type: application/json
+
+{
+    "brand":"Dell"
+}
+
+###
+# Create Laptop
+POST {{ baseURL }}
+Content-Type: application/json
+
+[
+  {
+    "laptopID": 6,
+    "cpu": "Intel Core i5-11400H",
+    "ram": "8GB",
+    "disk": "512GB SSD",
+    "vga": "NVIDIA GTX1650 4GB",
+    "screen": "15.6 inch FHD 144Hz",
+    "keyboard": "có đèn led",
+    "window": "Win 11",
+    "color": "Đen",
+    "productName": "Laptop MSI Gaming GF63 Thin (11SC-665VN) (i5-11400H/8GB RAM/512GB SSD/GTX1650 4GB/15.6 inch FHD 144Hz/Win11/Đen)",
+    "skuNumber": "LTMS478",
+    "productImgs": [
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_18.png",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_5.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_17.png",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_16.png",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_15.png",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_14.png",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_13.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_12.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_11.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_10.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_9.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_8.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_7.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_6.jpeg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_4.jpg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_3.jpg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_2.jpg",
+      "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_1.jpg"
+    ],
+    "listInfo": [
+      { "label": "brand", "value": "MSI" },
+      { "label": "type", "value": "GF63" },
+      { "label": "partNumber", "value": "11SC-665VN" },
+      { "label": "color", "value": "Đen" },
+      { "label": "chip", "value": "Intel® Core™ i5 11400H" },
+      { "label": "chipSet", "value": "Intel® HM570" },
+      { "label": "rom", "value": "8GB DDR4 (3200Mhz) (8GB *1)" },
+      { "label": "connector", "value": "2" },
+      { "label": "ram", "value": "32GB" },
+      { "label": "vga", "value": "Nvidia Geforce GTX 1650 GDDR5 4GB" },
+      { "label": "disk", "value": "512GB NVMe PCIe Gen3x4 SSD" },
+      { "label": "lightDisk", "value": "No" },
+      { "label": "cardReader", "value": "No" },
+      { "label": "Keyboard", "value": "Single backlit (red)" },
+      { "label": "screen", "value": "15.6 inch FHD (1920*1080), 144Hz" },
+      { "label": "webcam", "value": "HD type (30fps@720p)" },
+      { "label": "audio", "value": "2x2W Speaker" },
+      { "label": "internet", "value": "Gigabit LAN" },
+      { "label": "noWires", "value": "Intel Wi-Fi 6 AX201(2x2ax)+BT5" },
+      {
+        "label": "connectionPort",
+        "value": "1x Mic-in\n1x Headphone-out\n1x TYPE-C USB3.1 GEN1\n3x TYPE-A USB3.1 GEN1\n1x RJ45\n1x HDMI (4K @ 30Hz)"
+      },
+      { "label": "battery", "value": "3 cell, 51Wh" },
+      { "label": "size", "value": "" },
+      { "label": "weight", "value": "1.86 kg" },
+      { "label": "window", "value": "Windows11 Home" },
+      { "label": "accessory", "value": "Cable + sạc" }
+    ],
+    "review": "            <div class=\"nd title_box_scroll_content_2019 showmore\">               <h2 class=\"ddnb-title spct-title\">Đánh giá Laptop MSI Gaming GF63 Thin (11SC-665VN) (i5-11400H/8GB RAM/512GB SSD/GTX1650 4GB/15.6 inch FHD 144Hz/Win11/Đen)</h2>               <p><strong><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-2.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"800\" height=\"600\"></strong></p><p><strong>Lưu ý: </strong><em>Bài viết và hình ảnh chỉ có tính chất tham khảo vì cấu hình và đặc tính sản phẩm có thể thay đổi theo thị trường và từng phiên bản. Quý khách cần cấu hình cụ thể vui lòng liên hệ với các tư vấn viên để được trợ giúp.</em></p><p>Cấu hình được thiết kế vượt trội đến từ laptop MSI Gaming GF63 Thin cùng kiểu dáng gaming mạnh mẽ, là người cộng sự lý tưởng, nâng tầm mọi trải nghiệm cho người dùng.</p><h3>Thu hút mọi ánh nhìn nhờ kiểu dáng mạnh mẽ</h3><p>Laptop MSI đã mang đến một phiên bản laptop gaming với trọng lượng 1.86 kg và dày 21.7 mm, cùng nắp lưng được thiết kế bằng kim loại cao cấp, cùng bạn chiến game đỉnh cao dù ở bất kỳ đâu, đồng hành cùng bạn trên mọi hành trình. Thân máy được làm bằng nhựa phần nào giúp máy có khả năng tản nhiệt tốt hơn khi chiến game.</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-3.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><p>Bàn phím của laptop MSI gaming được trang bị đèn nền nổi bật, cùng hành trình phím sâu và độ nảy tốt, cho bạn làm việc hay giải trí trong cả điều kiện ánh sáng kém mà không lo nhầm lẫn, tăng thêm sự thích thú trong quá trình sử dụng.</p><p>Dọc hai bên chiếc laptop này được trang bị các cổng kết nối phổ biến như: 3 cổng USB 3.2, USB Type-C, HDMI, Jack tai nghe 3.5 mm và LAN (RJ45), cho phép bạn liên kết và truyền xuất dữ liệu với nhiều thiết bị ngoại vi tương thích khác nhau.</p><h3>Đột phá trên mọi chiến trường ảo với hiệu năng được tối ưu</h3><p>Thỏa mãn người dùng với các tựa game thịnh hành đầy kịch tính hiện nay như LOL, Cyberpunk 2077, CS:GO, FIFA,... nhờ hiệu năng vượt trội đến từ bộ CPU Intel Core i thế hệ 11 sở hữu cấu trúc 6 nhân 12 luồng, cho tốc độ xung nhịp cơ bản 2.60 GHz và đạt tối đa lên đến 5.0 GHz Turbo Boost, đồng thời hỗ trợ bạn xử lý các tác vụ văn phòng một cách hiệu quả, nhanh gọn cùng các ứng dụng Word, Excel,...</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-4.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><p>Đa nhiệm hơn bao giờ hết nhờ RAM 8 GB chuẩn DDR4 2 khe (1 khe 8 GB + 1 khe rời) với tốc độ bus RAM 3200 MHz, cùng khả năng nâng cấp RAM tối đa lên đến 64 GB, tối ưu hơn cho mọi nhu cầu, cho phép bạn mở và chuyển đổi giữa nhiều ứng dụng cùng lúc mà không xảy ra tình trạng giật lag, nâng cao năng suất công việc.</p><p>Chiếc laptop này được trang bị card đồ họa rời GeForce GTX 1650 Max-Q Design 4 GB từ nhà NVIDIA hỗ trợ người dùng thao tác mọi hành động trong game một cách trơn tru, cùng khả năng chỉnh sửa hình ảnh, render video,... với các ứng dụng Photoshop, AI, Premiere,... tạo nên những tác phẩm ấn tượng, đầy sáng tạo.</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-5.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><p>Ổ cứng SSD NVMe PCle (Có thể tháo ra, lắp thanh khác tối đa 2 TB) mang đến không gian lưu trữ rộng lớn, đồng thời hỗ trợ bạn mở và vận hành máy hay các ứng dụng chỉ trong vài giây. Nâng cấp bộ nhớ của chiếc laptop gaming này nhờ khe cắm hỗ trợ HDD SATA (nâng cấp tối đa 2 TB), cho mọi nhu cầu của người dùng được tối ưu hơn bao giờ hết.</p><h3><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-6.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></h3><h3>Sống động như thật với hình ảnh và âm thanh rõ nét</h3><p>Màn hình 15.6 inch cùng độ phân giải Full HD (1920 x 1080) mang đến hình ảnh chân thật, sắc nét, cho bạn chìm đắm vào thế giới game với những chuyển động trơn tru, cân mọi thể loại game hành động kịch tính mà không xảy ra tình trạng giật, lag nhờ tần số quét màn hình 144 Hz.</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-7.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><p>Khung hình rộng mở lên đến 178 độ đến từ tấm nền IPS, kết hợp cùng công nghệ chống chói Anti Glare, cho phép bạn làm việc ở những nơi có điều kiện ánh sáng kém nhưng mắt vẫn bị ảnh hưởng quá nhiều từ ánh sáng xanh độc hại.&nbsp;</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-8.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><p>Công nghệ âm thanh Nahimic Audio được tích hợp với Hi-Res Audio mang đến cho bạn âm thanh đúng chuẩn với độ nét cao cùng kỹ thuật lọc và khử tiếng ồn tốt, cho bạn chìm đắm trong thế giới của sự thư giãn sau những giờ làm việc căng thẳng.</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-9.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><h3>Kết nối đa dạng</h3><p>Chuẩn kết nối không dây Bluetooth 5.1 và Wi-Fi 6 (802.11ax), hỗ trợ bạn làm việc ở bất kỳ đâu với đường truyền ổn định, không lo gián đoạn, cho công việc đạt hiệu quả tối đa hay giành ưu thế trên các chiến trường ảo.</p><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-11.jpeg\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1020\" height=\"570\"></p><h3>Khả năng nâng cấp</h3><p><img style=\"display: block; margin-left: auto; margin-right: auto;\" src=\"https://hanoicomputercdn.com/media/lib/31-08-2022/hacom-msi-gaming-gf63-thin-12.png\" alt=\"Laptop MSI Gaming GF63 Thin \" width=\"1024\" height=\"768\"></p><p>Laptop MSI Gaming GF63 Thin sẽ là người bạn đồng hành sáng giá, cùng bạn tạo nên những thành công trong cả công việc hay các trận chiến game đầy kịch tính, phù hợp cho bất kỳ ai. Theo dõi <a href=\"https://www.hanoicomputer.vn/\">HACOM </a>nhiều hơn để cập nhật thêm nhiều bài viết hay ho hơn nữa! Hãy gọi ngay hotline 1900.1903 nếu có bất cứ câu hỏi hay thắc mắc nào mà các bạn cần giải đáp để được đội ngũ tư vấn viên trợ giúp &nbsp;nhé!</p>            </div>"
+  }
+]
+

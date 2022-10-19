@@ -82,6 +82,9 @@ class LaptopInfo {
 
   @prop({ type: Date, default: new Date() })
   public updatedAt?: Date;
+
+  @prop({ type: String, required: true })
+  public review: string;
 }
 
 const LaptopInfoModel = getModelForClass(LaptopInfo);

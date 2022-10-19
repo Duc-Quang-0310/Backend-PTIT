@@ -27,4 +27,8 @@ export interface LaptopInfos {
   window?: string;
   accessory?: string;
   updatedAt?: Date;
+  review?: string;
 }
+export type RawLaptopData = Partial<LaptopInfos> & {
+  listInfo: Array<Record<string, string>>;
+};
