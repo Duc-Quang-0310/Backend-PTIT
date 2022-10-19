@@ -43,3 +43,4 @@ export class CheckEmailExistDto {
   @IsEmail()
   public email: string;
 }
+export class CreateUserDto {}
