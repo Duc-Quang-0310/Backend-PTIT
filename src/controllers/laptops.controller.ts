@@ -32,6 +32,24 @@ class LaptopController {
       next(error);
     }
   };
+
+  public paginatingLaptops = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    const { page = '1', size = '15' } = req.query as Record<string, string>;
+    try {
+      const laptops = await this.laptopService.getLaptopsByPaginating({
+        page,
+        size,
+      });
+      res.status(201).json({ data: laptops });
+    } catch (error) {
+      next(error);
+    }
+  };
+
   public deleteOne = async (
     req: Request,
     res: Response,

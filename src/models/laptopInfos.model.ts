@@ -2,7 +2,22 @@ import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
 
 @modelOptions({ schemaOptions: { collection: 'laptopInfos' } })
 class LaptopInfo {
-  @prop({ type: String, required: true })
+  @prop({ type: String })
+  public cpu?: string;
+
+  @prop({ type: String })
+  public keyboard?: string;
+
+  @prop({ type: String })
+  public productName?: string;
+
+  @prop({ type: String })
+  public sku?: string;
+
+  @prop({ type: Array<string> })
+  public productImg?: string[];
+
+  @prop({ type: String })
   public laptopID: string;
 
   @prop({ type: String })
