@@ -40,7 +40,7 @@ class LaptopService {
 
       return createdLaptops as Array<LaptopInfos>;
     } catch (error) {
-      throw new HttpException(400, `Malformed request body`);
+      throw new HttpException(400, error);
     }
   }
 
@@ -48,11 +48,31 @@ class LaptopService {
     const laptops: LaptopInfos[] = await laptopInfosModel.find();
     return laptops;
   }
+  public async getLaptopsByPaginating({
+    page,
+    size,
+  }: {
+    page: string | number;
+    size: string | number;
+  }): Promise<Array<LaptopInfos>> {
+    page = +page;
+    size = +size;
+    const skip = (page - 1) * size;
+    const laptops: LaptopInfos[] = (await laptopInfosModel
+      .find()
+      .skip(skip)
+      .limit(size)) as LaptopInfos[];
+    return laptops;
+  }
   public async deleteOne(laptopID: string): Promise<LaptopInfos> {
     const deletedLaptopId: LaptopInfos =
       await laptopInfosModel.findByIdAndDelete(laptopID);
     if (!deletedLaptopId) throw new HttpException(400, "Laptop doesn't exist");
     return deletedLaptopId;
+
+    // ---------> delete all records in db <--------------
+    // await laptopInfosModel.deleteMany();
+    // return {} as LaptopInfos;
   }
   public async updateOne(
     laptopID: string,

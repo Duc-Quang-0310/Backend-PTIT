@@ -28,6 +28,11 @@ export interface LaptopInfos {
   accessory?: string;
   updatedAt?: Date;
   review?: string;
+  cpu: string;
+  keyboard: string;
+  productName: string;
+  sku: string;
+  productImg: string[];
 }
 export type RawLaptopData = Partial<LaptopInfos> & {
   listInfo: Array<Record<string, string>>;

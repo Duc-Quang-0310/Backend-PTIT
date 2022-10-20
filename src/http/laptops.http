@@ -5,6 +5,10 @@
 # Find All Laptops
 GET {{ baseURL }}
 
+###
+# Paginate laptops
+GET {{ baseURL }}/pagination?page=2&size=2
+
 
 ###
 # Delete Laptop
@@ -37,7 +41,7 @@ Content-Type: application/json
     "color": "Đen",
     "productName": "Laptop MSI Gaming GF63 Thin (11SC-665VN) (i5-11400H/8GB RAM/512GB SSD/GTX1650 4GB/15.6 inch FHD 144Hz/Win11/Đen)",
     "skuNumber": "LTMS478",
-    "productImgs": [
+    "productImg": [
       "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_18.png",
       "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_5.jpeg",
       "https://hanoicomputercdn.com/media/product/67485_hacom_msi_gaming_gf63_thin_17.png",

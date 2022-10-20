@@ -1,4 +1,9 @@
 export const requiredProps = [
+  'cpu',
+  'keyboard',
+  'productName',
+  'sku',
+  'productImg',
   'laptopID',
   'brand',
   'type',
