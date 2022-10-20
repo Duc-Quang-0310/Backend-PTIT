@@ -18,6 +18,7 @@ class LaptopsRoute implements Routes {
       `${this.path}/pagination`,
       this.laptopsController.paginatingLaptops,
     );
+    this.router.get(`${this.path}/:id`, this.laptopsController.getLaptopDetail);
     this.router.delete(`${this.path}/:id`, this.laptopsController.deleteOne);
     this.router.put(`${this.path}/:id`, this.laptopsController.updateOne);
   }

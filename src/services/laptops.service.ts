@@ -88,6 +88,18 @@ class LaptopService {
       throw new HttpException(400, "Laptop doesn't exist");
     }
   }
+
+  public async getOneDetail(laptopID: string) {
+    try {
+      const currentLaptop: LaptopInfos = await laptopInfosModel.findById(
+        laptopID,
+      );
+
+      return currentLaptop;
+    } catch (error) {
+      throw new HttpException(400, "Laptop doesn't exist");
+    }
+  }
 }
 
 export default LaptopService;

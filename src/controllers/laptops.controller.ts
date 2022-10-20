@@ -83,6 +83,22 @@ class LaptopController {
       next(error);
     }
   };
+
+  public getLaptopDetail = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const laptopID = req.params.id;
+      const laptop = await this.laptopService.getOneDetail(laptopID);
+      res.status(201).json({
+        laptop,
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default LaptopController;
