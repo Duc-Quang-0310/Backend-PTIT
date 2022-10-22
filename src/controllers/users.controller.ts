@@ -79,6 +79,19 @@ class UsersController {
       next(error);
     }
   };
+
+  public getAllProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const data = await this.userService.getALlProfile();
+      res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default UsersController;

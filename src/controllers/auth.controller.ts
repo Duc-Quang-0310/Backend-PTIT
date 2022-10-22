@@ -87,6 +87,19 @@ class AuthController {
       next(error);
     }
   };
+
+  public getAllProfile = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const data = await this.authService.getAllProfileContent();
+      res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default AuthController;
