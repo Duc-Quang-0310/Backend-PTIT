@@ -3,6 +3,8 @@ import { HttpException } from '@exceptions/HttpException';
 import { LaptopInfos, RawLaptopData } from '@interfaces/laptopInfos.interface';
 import { requiredProps } from '@utils/laptopRequiredProps';
 import laptopInfosModel from '@models/laptopInfos.model';
+import commentModel from '@models/comment.model';
+import { Comment } from '@/interfaces/comment.interface';
 
 class LaptopService {
   public async addNewLaptops(
@@ -71,8 +73,8 @@ class LaptopService {
     return deletedLaptopId;
 
     // ---------> delete all records in db <--------------
-    // await laptopInfosModel.deleteMany();
-    // return {} as LaptopInfos;
+    await laptopInfosModel.deleteMany();
+    return {} as LaptopInfos;
   }
   public async updateOne(
     laptopID: string,
@@ -91,11 +93,12 @@ class LaptopService {
 
   public async getOneDetail(laptopID: string) {
     try {
-      const currentLaptop: LaptopInfos = await laptopInfosModel.findById(
-        laptopID,
-      );
+      const [currentLaptop, comments] = await Promise.all([
+        laptopInfosModel.findById(laptopID),
+        commentModel.find({ laptopId: laptopID }),
+      ]);
 
-      return currentLaptop;
+      return [currentLaptop, comments];
     } catch (error) {
       throw new HttpException(400, "Laptop doesn't exist");
     }

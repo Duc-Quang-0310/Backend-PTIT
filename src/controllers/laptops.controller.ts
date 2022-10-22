@@ -91,9 +91,12 @@ class LaptopController {
   ) => {
     try {
       const laptopID = req.params.id;
-      const laptop = await this.laptopService.getOneDetail(laptopID);
+      const [laptop, comments] = await this.laptopService.getOneDetail(
+        laptopID,
+      );
       res.status(201).json({
         laptop,
+        comments,
       });
     } catch (error) {
       next(error);
