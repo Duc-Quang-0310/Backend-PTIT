@@ -4,6 +4,7 @@ import {
   SignUpUserDto,
   LoginUserDto,
   CheckEmailExistDto,
+  ChangeAccountPasswordDto,
 } from '@dtos/users.dto';
 import { Routes } from '@interfaces/routes.interface';
 import authMiddleware from '@middlewares/auth.middleware';
@@ -50,6 +51,16 @@ class AuthRoute implements Routes {
     this.router.get(
       `${this.path}get-all-profile`,
       this.authController.getAllProfile,
+    );
+    this.router.post(
+      `${this.path}password-recover`,
+      validationMiddleware(LoginUserDto, 'body'),
+      this.authController.passwordRecover,
+    );
+    this.router.post(
+      `${this.path}change-password`,
+      validationMiddleware(ChangeAccountPasswordDto, 'body'),
+      this.authController.changePassword,
     );
   }
 }
