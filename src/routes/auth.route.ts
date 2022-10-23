@@ -47,6 +47,10 @@ class AuthRoute implements Routes {
       authenRegenerate,
       this.authController.regenerateAccessToken,
     );
+    this.router.get(
+      `${this.path}get-all-profile`,
+      this.authController.getAllProfile,
+    );
   }
 }
 
