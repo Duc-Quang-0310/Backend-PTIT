@@ -3,7 +3,11 @@ import LaptopsController from '@controllers/laptops.controller';
 import CommentController from '@/controllers/comment.controller';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
-import { AddCommentDto } from '@dtos/comment.dto';
+import {
+  AddCommentDto,
+  DeleteCommentDto,
+  UpdateCommentDto,
+} from '@dtos/comment.dto';
 
 class LaptopsRoute implements Routes {
   public path = '/api/laptop';
@@ -34,6 +38,16 @@ class LaptopsRoute implements Routes {
       `${this.path}/comment`,
       validationMiddleware(AddCommentDto, 'body'),
       this.commentController.addNewComment,
+    );
+    this.router.put(
+      `${this.path}/comment/:id`,
+      validationMiddleware(UpdateCommentDto, 'body'),
+      this.commentController.updateComment,
+    );
+    this.router.delete(
+      `${this.path}/comment/:id`,
+      validationMiddleware(DeleteCommentDto, 'body'),
+      this.commentController.deleteComment,
     );
   }
 }

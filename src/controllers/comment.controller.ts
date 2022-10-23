@@ -1,12 +1,10 @@
 import { NextFunction, Request, Response } from 'express';
-import { AddComment } from '@/interfaces/comment.interface';
-import commentService from '@/services/comment.service';
+import { AddComment, UpdateComment } from '@/interfaces/comment.interface';
+import CommentService from '@/services/comment.service';
 
-class LaptopRatingController {
-  public commentService = new commentService();
+class LaptopCommentController {
+  public commentService = new CommentService();
 
-  // ------------------>  laptop crud  <---------------------
-  // ------------------>  laptop crud  <---------------------
   public addNewComment = async (
     req: Request,
     res: Response,
@@ -22,6 +20,40 @@ class LaptopRatingController {
       next(error);
     }
   };
+  public updateComment = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { id: commentId } = req.params as Record<string, string>;
+      const updateComment: UpdateComment = req.body;
+      const updatedComment = await this.commentService.updateComment(
+        commentId,
+        updateComment,
+      );
+      res.status(201).json({ data: updatedComment, message: 'Created' });
+    } catch (error) {
+      next(error);
+    }
+  };
+  public deleteComment = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { id: commentId } = req.params as Record<string, string>;
+      const { userId } = req.body;
+      const deletedComment = await this.commentService.deleteComment(
+        commentId,
+        userId,
+      );
+      res.status(201).json({ data: deletedComment, message: 'Deleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
-export default LaptopRatingController;
+export default LaptopCommentController;

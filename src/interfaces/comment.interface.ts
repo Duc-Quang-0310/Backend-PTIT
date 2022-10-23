@@ -6,3 +6,4 @@ export interface AddComment {
 }
 
 export type Comment = AddComment & { _id: string };
+export type UpdateComment = AddComment;

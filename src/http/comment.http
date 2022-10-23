@@ -1,0 +1,41 @@
+# baseURL
+@baseURL = http://localhost:5000/api/laptop/comment 
+
+
+
+###
+# Create comment
+POST {{ baseURL }}
+Content-Type: application/json
+
+{
+    "userId": "634c197161aa5cc88bdc43a2",
+    "laptopId": "6353f6d2a440cdaaebd04633",
+    "comment": "aaa",
+    "rating": 4
+}
+
+
+
+###
+# Update comment
+PUT {{ baseURL }}/63540e56654ea08e727b3d7d
+
+Content-Type: application/json
+
+{
+    "userId": "634c197161aa5cc88bdc43a2",
+    "laptopId": "6353f6d2a440cdaaebd04633",
+    "comment": "aaa",
+    "rating": 4
+}
+###
+# Delete comment
+PUT {{ baseURL }}/63540e56654ea08e727b3d7d
+
+Content-Type: application/json
+
+{
+    "userId": "634c197161aa5cc88bdc43a2",
+}
+

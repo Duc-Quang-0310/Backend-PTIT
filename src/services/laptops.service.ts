@@ -4,7 +4,10 @@ import { LaptopInfos, RawLaptopData } from '@interfaces/laptopInfos.interface';
 import { requiredProps } from '@utils/laptopRequiredProps';
 import laptopInfosModel from '@models/laptopInfos.model';
 import commentModel from '@models/comment.model';
+import profileModel from '@models/profiles.model';
 import { Comment } from '@/interfaces/comment.interface';
+
+import { cloneDeep } from 'lodash';
 
 class LaptopService {
   public async addNewLaptops(
@@ -82,7 +85,9 @@ class LaptopService {
   ): Promise<LaptopInfos> {
     try {
       const updatedLaptopInfos: LaptopInfos =
-        await laptopInfosModel.findByIdAndUpdate(laptopID, laptopInfos);
+        await laptopInfosModel.findByIdAndUpdate(laptopID, laptopInfos, {
+          new: true,
+        });
       if (!updatedLaptopInfos)
         throw new HttpException(400, "Laptop doesn't exist");
       return updatedLaptopInfos;
@@ -93,14 +98,26 @@ class LaptopService {
 
   public async getOneDetail(laptopID: string) {
     try {
-      const [currentLaptop, comments] = await Promise.all([
-        laptopInfosModel.findById(laptopID),
-        commentModel.find({ laptopId: laptopID }),
-      ]);
-
-      return [currentLaptop, comments];
+      const [currentLaptop, comments]: [LaptopInfos[], Comment[]] =
+        (await Promise.all([
+          laptopInfosModel.findById(laptopID),
+          commentModel.find({ laptopId: laptopID }).populate('userId'),
+        ])) as any;
+      const commentsWithUserProfile = await Promise.all(
+        comments.map(async (cmt) => {
+          let temp: any = { ...cmt };
+          temp = temp._doc;
+          const comment = cloneDeep(temp);
+          const userProfile = await profileModel.find({
+            userId: cmt.userId._id,
+          });
+          comment.userProfile = userProfile;
+          return comment;
+        }),
+      );
+      return [currentLaptop, commentsWithUserProfile];
     } catch (error) {
-      throw new HttpException(400, "Laptop doesn't exist");
+      throw new HttpException(400, error);
     }
   }
 }
