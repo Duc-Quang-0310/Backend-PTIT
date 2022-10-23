@@ -2,7 +2,7 @@ import { UserRole, UserStatus } from '@/interfaces/users.interface';
 import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
 
 @modelOptions({ schemaOptions: { collection: 'users', timestamps: true } })
-class User {
+export class User {
   @prop({ type: String, required: true, unique: true })
   public email: string;
 

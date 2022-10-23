@@ -1,9 +1,12 @@
 import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
 
 @modelOptions({ schemaOptions: { collection: 'laptopInfos' } })
-class LaptopInfo {
+export class LaptopInfo {
   @prop({ type: String })
   public cpu?: string;
+
+  @prop({ type: String })
+  public price?: string;
 
   @prop({ type: String })
   public keyboard?: string;

@@ -3,6 +3,11 @@ import { HttpException } from '@exceptions/HttpException';
 import { LaptopInfos, RawLaptopData } from '@interfaces/laptopInfos.interface';
 import { requiredProps } from '@utils/laptopRequiredProps';
 import laptopInfosModel from '@models/laptopInfos.model';
+import commentModel from '@models/comment.model';
+import profileModel from '@models/profiles.model';
+import { Comment } from '@/interfaces/comment.interface';
+
+import { cloneDeep } from 'lodash';
 
 class LaptopService {
   public async addNewLaptops(
@@ -71,8 +76,8 @@ class LaptopService {
     return deletedLaptopId;
 
     // ---------> delete all records in db <--------------
-    // await laptopInfosModel.deleteMany();
-    // return {} as LaptopInfos;
+    await laptopInfosModel.deleteMany();
+    return {} as LaptopInfos;
   }
   public async updateOne(
     laptopID: string,
@@ -80,7 +85,9 @@ class LaptopService {
   ): Promise<LaptopInfos> {
     try {
       const updatedLaptopInfos: LaptopInfos =
-        await laptopInfosModel.findByIdAndUpdate(laptopID, laptopInfos);
+        await laptopInfosModel.findByIdAndUpdate(laptopID, laptopInfos, {
+          new: true,
+        });
       if (!updatedLaptopInfos)
         throw new HttpException(400, "Laptop doesn't exist");
       return updatedLaptopInfos;
@@ -91,13 +98,26 @@ class LaptopService {
 
   public async getOneDetail(laptopID: string) {
     try {
-      const currentLaptop: LaptopInfos = await laptopInfosModel.findById(
-        laptopID,
+      const [currentLaptop, comments]: [LaptopInfos[], Comment[]] =
+        (await Promise.all([
+          laptopInfosModel.findById(laptopID),
+          commentModel.find({ laptopId: laptopID }).populate('userId'),
+        ])) as any;
+      const commentsWithUserProfile = await Promise.all(
+        comments.map(async (cmt) => {
+          let temp: any = { ...cmt };
+          temp = temp._doc;
+          const comment = cloneDeep(temp);
+          const userProfile = await profileModel.find({
+            userId: cmt.userId._id,
+          });
+          comment.userProfile = userProfile;
+          return comment;
+        }),
       );
-
-      return currentLaptop;
+      return [currentLaptop, commentsWithUserProfile];
     } catch (error) {
-      throw new HttpException(400, "Laptop doesn't exist");
+      throw new HttpException(400, error);
     }
   }
 }
