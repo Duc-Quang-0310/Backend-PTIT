@@ -44,3 +44,14 @@ export class CheckEmailExistDto {
   public email: string;
 }
 export class CreateUserDto {}
+
+export class ChangeAccountPasswordDto {
+  @IsNotEmpty()
+  public oldPassword: string;
+
+  @IsNotEmpty()
+  public newPassword: string;
+
+  @IsNotEmpty()
+  public userId: string;
+}

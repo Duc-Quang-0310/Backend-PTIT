@@ -168,6 +168,88 @@ class AuthService {
   public async getAllProfileContent(): Promise<Profiles[]> {
     return ProfileModel.find();
   }
+
+  public async recoverPassword(
+    email: string,
+    password: string,
+  ): Promise<string> {
+    const userInfo: User = await userModel.findOne({ email });
+
+    if (!userInfo) {
+      throw new HttpException(409, `Email ${email} không tồn tại`);
+    }
+
+    const profile = await ProfileModel.findOne({ userId: userInfo?._id });
+
+    if (!profile) {
+      throw new HttpException(409, `Tài khoản với ${email} không tồn tại`);
+    }
+
+    const hashedPassword = await hash(password, 12);
+    console.log(
+      '🚀 ~ file: auth.service.ts ~ line 189 ~ AuthService ~ hashedPassword',
+      hashedPassword,
+    );
+
+    await userModel.findByIdAndUpdate(userInfo?._id, {
+      email,
+      password: hashedPassword,
+      createdAt: userInfo.createdAt,
+      updatedAt: new Date(),
+      role: userInfo.role,
+      status: userInfo.status,
+      token: userInfo.token,
+    });
+
+    return 'Lấy lại tài khoản thành công';
+  }
+
+  public async changePasswordService(
+    oldPassword: string,
+    newPassword: string,
+    userId: string,
+  ): Promise<string> {
+    if (!userId) {
+      throw new HttpException(409, `Cần có user ID`);
+    }
+
+    if (!oldPassword) {
+      throw new HttpException(409, `Cần có mật khẩu cũ`);
+    }
+
+    if (!newPassword) {
+      throw new HttpException(409, `Cần có mật khẩu mới`);
+    }
+
+    const userInfo = await userModel.findById(userId);
+
+    if (!userInfo) {
+      throw new HttpException(409, `User ID không tồn tại`);
+    }
+
+    const isPasswordMatching: boolean = await compare(
+      oldPassword,
+      userInfo.password,
+    );
+
+    if (!isPasswordMatching) {
+      throw new HttpException(409, `Mật khẩu cũ không đúng`);
+    }
+
+    const hashedPassword = await hash(newPassword, 12);
+
+    await userModel.findByIdAndUpdate(userInfo?._id, {
+      email: userInfo.email,
+      password: hashedPassword,
+      createdAt: userInfo.createdAt,
+      updatedAt: new Date(),
+      role: userInfo.role,
+      status: userInfo.status,
+      token: userInfo.token,
+    });
+
+    return 'Đổi mật khẩu thành công';
+  }
 }
 
 export default AuthService;

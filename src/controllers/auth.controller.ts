@@ -33,7 +33,7 @@ class AuthController {
 
       res.status(200).json({
         data: { userInfo, profile },
-        message: 'Bạn đã tạo tài khoản thành công',
+        message: 'Đăng nhập thành công',
         accessToken,
         refreshToken,
       });
@@ -96,6 +96,38 @@ class AuthController {
     try {
       const data = await this.authService.getAllProfileContent();
       res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public passwordRecover = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { email = '', password = '' } = req.body;
+      const data = await this.authService.recoverPassword(email, password);
+      res.status(200).json({ message: data });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public changePassword = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { oldPassword = '', newPassword = '', userId = '' } = req.body;
+      const data = await this.authService.changePasswordService(
+        oldPassword,
+        newPassword,
+        userId,
+      );
+      res.status(200).json({ message: data });
     } catch (error) {
       next(error);
     }
