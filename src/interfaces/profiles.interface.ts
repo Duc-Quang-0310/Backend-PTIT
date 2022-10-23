@@ -9,4 +9,5 @@ export interface Profiles {
   district?: string;
   ward?: string;
   updatedAt?: Date;
+  avatar?: string;
 }

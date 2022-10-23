@@ -164,6 +164,10 @@ class AuthService {
   public async genNewToken(user: User): Promise<string> {
     return this.generateToken(user.email, TokenType.ACCESS);
   }
+
+  public async getAllProfileContent(): Promise<Profiles[]> {
+    return ProfileModel.find();
+  }
 }
 
 export default AuthService;
