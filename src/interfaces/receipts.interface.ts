@@ -1,6 +1,7 @@
 export interface Receipt {
   _id: string;
-  profileID: string;
-  itemsID: string[];
+  userId: any;
+  items: any;
+  cash: string;
   lastModify?: Date;
 }
