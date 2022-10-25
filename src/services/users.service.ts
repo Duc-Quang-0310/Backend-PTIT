@@ -1,8 +1,9 @@
 import { hash } from 'bcrypt';
 import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
-import { User } from '@interfaces/users.interface';
+import { User, UserProfile } from '@interfaces/users.interface';
 import userModel from '@models/users.model';
+import userProfileModel from '@models/profiles.model';
 import { isEmpty } from '@utils/util';
 
 class UserService {
@@ -74,6 +75,19 @@ class UserService {
     if (!deleteUserById) throw new HttpException(409, "User doesn't exist");
 
     return deleteUserById;
+  }
+
+  public async updateUserProfile(
+    userId: string,
+    newUserProfile: UserProfile,
+  ): Promise<UserProfile> {
+    const updatedUserProfile: UserProfile =
+      await userProfileModel.findOneAndUpdate({ userId }, newUserProfile, {
+        new: true,
+      });
+    if (!updatedUserProfile) throw new HttpException(409, 'Invalid userId');
+
+    return updatedUserProfile;
   }
 }
 

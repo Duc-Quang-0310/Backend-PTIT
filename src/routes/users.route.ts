@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import UsersController from '@controllers/users.controller';
-import { CreateUserDto } from '@dtos/users.dto';
+import { CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
 
@@ -27,6 +27,11 @@ class UsersRoute implements Routes {
       this.usersController.updateUser,
     );
     this.router.delete(`${this.path}/:id`, this.usersController.deleteUser);
+    this.router.put(
+      `${this.path}/profile/:id`,
+      validationMiddleware(UpdateUserDto, 'body'),
+      this.usersController.updateUserProfile,
+    );
   }
 }
 

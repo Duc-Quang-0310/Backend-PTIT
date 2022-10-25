@@ -55,3 +55,32 @@ export class ChangeAccountPasswordDto {
   @IsNotEmpty()
   public userId: string;
 }
+
+export class UpdateUserDto {
+  @IsOptional()
+  public firstName?: string;
+
+  @IsOptional()
+  public lastName?: string;
+
+  @IsOptional()
+  public dob?: string;
+
+  @IsOptional()
+  public address?: string;
+
+  @IsOptional()
+  public province?: string;
+
+  @IsOptional()
+  public district?: string;
+
+  @IsOptional()
+  public ward?: string;
+
+  @IsOptional()
+  public updatedAt?: Date;
+
+  @IsOptional()
+  public avatar?: string;
+}
