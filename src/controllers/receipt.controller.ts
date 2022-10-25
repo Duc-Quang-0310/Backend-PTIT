@@ -13,7 +13,9 @@ class ReceiptController {
     try {
       const receiptInfo: Receipt = req.body;
       const createdReceipt = await this.receiptService.addNewBill(receiptInfo);
-      res.status(201).json({ data: createdReceipt, message: 'Created' });
+      res
+        .status(201)
+        .json({ data: createdReceipt, message: 'Tạo mới thành công' });
     } catch (error) {
       next(error);
     }
