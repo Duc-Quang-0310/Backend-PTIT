@@ -18,6 +18,15 @@ class Receipt {
   @prop({ type: String, required: true })
   public cash: string;
 
+  @prop({ type: String, required: true })
+  public telephone: string;
+
+  @prop({ type: String, required: true })
+  public address: string;
+
+  @prop({ type: Array<number>, required: true })
+  public quantity: number[];
+
   @prop({ type: Date, default: new Date() })
   public lastModify?: Date;
 }

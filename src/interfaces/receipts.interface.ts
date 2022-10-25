@@ -4,4 +4,7 @@ export interface Receipt {
   items: any;
   cash: string;
   lastModify?: Date;
+  telephone: string;
+  address: string;
+  quantity: number[];
 }

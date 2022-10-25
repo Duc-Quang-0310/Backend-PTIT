@@ -12,4 +12,13 @@ export class ReceiptDto {
 
   @IsOptional()
   public lastModify?: Date;
+
+  @IsNotEmpty()
+  public telephone: string;
+
+  @IsNotEmpty()
+  public address: string;
+
+  @IsNotEmpty()
+  public quantity: number[];
 }
