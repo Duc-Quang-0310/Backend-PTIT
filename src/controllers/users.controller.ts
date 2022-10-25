@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto } from '@dtos/users.dto';
-import { User } from '@interfaces/users.interface';
+import { CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
+import { User, UserProfile } from '@interfaces/users.interface';
 import userService from '@services/users.service';
 
 class UsersController {
@@ -88,6 +88,23 @@ class UsersController {
     try {
       const data = await this.userService.getALlProfile();
       res.status(200).json(data);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updateUserProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const userId: string = req.params.id;
+      const newUserProfile: UserProfile = req.body;
+      const newUpdatedUserProfile: UserProfile =
+        await this.userService.updateUserProfile(userId, newUserProfile);
+
+      res.status(200).json({ data: newUpdatedUserProfile, message: 'updated' });
     } catch (error) {
       next(error);
     }

@@ -20,3 +20,24 @@ export interface User {
   status: UserStatus;
   token?: string;
 }
+export interface UserProfile {
+  userId: string;
+
+  firstName?: string;
+
+  lastName?: string;
+
+  dob?: string;
+
+  address?: string;
+
+  province?: string;
+
+  district?: string;
+
+  ward?: string;
+
+  updatedAt?: Date;
+
+  avatar?: string;
+}
