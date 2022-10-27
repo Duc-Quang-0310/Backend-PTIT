@@ -13,6 +13,9 @@ export class AddCommentDto {
   @IsNotEmpty()
   @IsIn([0, 1, 2, 3, 4, 5])
   public rating: number;
+
+  @IsNotEmpty()
+  public updatedAt: Date;
 }
 
 export class UpdateCommentDto {
@@ -28,6 +31,9 @@ export class UpdateCommentDto {
   @IsOptional()
   @IsIn([0, 1, 2, 3, 4, 5])
   public rating: number;
+
+  @IsNotEmpty()
+  public updatedAt: Date;
 }
 export class DeleteCommentDto {
   @IsNotEmpty()

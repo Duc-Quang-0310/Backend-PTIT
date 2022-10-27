@@ -1,97 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
-import { User, UserProfile } from '@interfaces/users.interface';
+import { UserProfile } from '@interfaces/users.interface';
 import userService from '@services/users.service';
+import ProfileModel from '@/models/profiles.model';
+import { Profiles } from '@/interfaces/profiles.interface';
 
 class UsersController {
   public userService = new userService();
-
-  public getUsers = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const findAllUsersData: User[] = await this.userService.findAllUser();
-
-      res.status(200).json({ data: findAllUsersData, message: 'findAll' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public getUserById = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const userId: string = req.params.id;
-      const findOneUserData: User = await this.userService.findUserById(userId);
-
-      res.status(200).json({ data: findOneUserData, message: 'findOne' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public createUser = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const userData: CreateUserDto = req.body;
-      const createUserData: User = await this.userService.createUser(userData);
-
-      res.status(201).json({ data: createUserData, message: 'created' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public updateUser = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const userId: string = req.params.id;
-      const userData: CreateUserDto = req.body;
-      const updateUserData: User = await this.userService.updateUser(
-        userId,
-        userData,
-      );
-
-      res.status(200).json({ data: updateUserData, message: 'updated' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public deleteUser = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const userId: string = req.params.id;
-      const deleteUserData: User = await this.userService.deleteUser(userId);
-
-      res.status(200).json({ data: deleteUserData, message: 'deleted' });
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  public getAllProfile = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
-    try {
-      const data = await this.userService.getALlProfile();
-      res.status(200).json(data);
-    } catch (error) {
-      next(error);
-    }
-  };
 
   public updateUserProfile = async (
     req: Request,
@@ -105,6 +19,35 @@ class UsersController {
         await this.userService.updateUserProfile(userId, newUserProfile);
 
       res.status(200).json({ data: newUpdatedUserProfile, message: 'updated' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public upLoadImage = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const image: any = req['files'];
+      const currentImg = image.avatar[0];
+      const avatarLink = await this.userService.uploadImgService(currentImg);
+      res.status(200).json(avatarLink);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getProfileById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const { id } = req.params;
+      const profile: Profiles = await ProfileModel.findById(id);
+      res.status(200).json(profile);
     } catch (error) {
       next(error);
     }
