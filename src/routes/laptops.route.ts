@@ -34,6 +34,10 @@ class LaptopsRoute implements Routes {
 
     // ------------------>  laptop rating crud  <---------------------
     // ------------------>  laptop rating crud  <---------------------
+    this.router.get(
+      `/api/comment/more-than-4`,
+      this.commentController.getCommentRatingMoreThan4,
+    );
     this.router.post(
       `${this.path}/comment`,
       validationMiddleware(AddCommentDto, 'body'),

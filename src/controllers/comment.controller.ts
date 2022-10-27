@@ -20,6 +20,7 @@ class LaptopCommentController {
       next(error);
     }
   };
+
   public updateComment = async (
     req: Request,
     res: Response,
@@ -37,6 +38,7 @@ class LaptopCommentController {
       next(error);
     }
   };
+
   public deleteComment = async (
     req: Request,
     res: Response,
@@ -50,6 +52,19 @@ class LaptopCommentController {
         userId,
       );
       res.status(201).json({ data: deletedComment, message: 'Deleted' });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public getCommentRatingMoreThan4 = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) => {
+    try {
+      const allComment = await this.commentService.findCommentRatingMoreThan4();
+      res.status(200).json({ data: allComment });
     } catch (error) {
       next(error);
     }

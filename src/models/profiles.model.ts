@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const DEFAULT_IMG_LINK = `https://avatars.dicebear.com/api/adventurer-neutral/${uuidv4()}.svg`;
 @modelOptions({ schemaOptions: { collection: 'profiles' } })
 class Profile {
-  @prop({ type: String, required: true })
+  @prop({ type: String, required: true, unique: true })
   public userId: string;
 
   @prop({ type: String })

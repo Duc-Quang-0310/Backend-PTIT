@@ -1,11 +1,18 @@
 import { Router } from 'express';
 import UsersController from '@controllers/users.controller';
-import { CreateUserDto, UpdateUserDto } from '@dtos/users.dto';
+import { UpdateUserDto } from '@dtos/users.dto';
 import { Routes } from '@interfaces/routes.interface';
 import validationMiddleware from '@middlewares/validation.middleware';
+import multer from 'multer';
+
+const upload = multer({
+  limits: { fileSize: 8000000 /** Max size file upload is 8MB */ },
+});
+
+const uploader = upload.fields([{ name: 'avatar', maxCount: 1 }]);
 
 class UsersRoute implements Routes {
-  public path = '/users';
+  public path = '/api/profile';
   public router = Router();
   public usersController = new UsersController();
 
@@ -14,24 +21,19 @@ class UsersRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.get(`${this.path}`, this.usersController.getUsers);
-    this.router.get(`${this.path}/:id`, this.usersController.getUserById);
-    this.router.post(
-      `${this.path}`,
-      validationMiddleware(CreateUserDto, 'body'),
-      this.usersController.createUser,
-    );
     this.router.put(
       `${this.path}/:id`,
-      validationMiddleware(CreateUserDto, 'body', true),
-      this.usersController.updateUser,
-    );
-    this.router.delete(`${this.path}/:id`, this.usersController.deleteUser);
-    this.router.put(
-      `${this.path}/profile/:id`,
       validationMiddleware(UpdateUserDto, 'body'),
       this.usersController.updateUserProfile,
     );
+
+    this.router.post(
+      `${this.path}/avatar-upload`,
+      uploader,
+      this.usersController.upLoadImage,
+    );
+
+    this.router.get(`${this.path}/:id`, this.usersController.getProfileById);
   }
 }
 
