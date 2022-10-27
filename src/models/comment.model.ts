@@ -20,6 +20,9 @@ class CommentScheme {
 
   @prop({ type: Number, required: true })
   public rating: 0 | 1 | 2 | 3 | 4 | 5;
+
+  @prop({ type: Date, required: true, default: new Date() })
+  public updatedAt: Date;
 }
 
 const CommentModel = getModelForClass(CommentScheme);
