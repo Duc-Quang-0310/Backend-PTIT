@@ -53,6 +53,7 @@ class LaptopService {
     const laptops: LaptopInfos[] = await laptopInfosModel.find();
     return laptops;
   }
+
   public async getLaptopsByPaginating({
     page,
     size,
@@ -69,16 +70,14 @@ class LaptopService {
       .limit(size)) as LaptopInfos[];
     return laptops;
   }
+
   public async deleteOne(laptopID: string): Promise<LaptopInfos> {
     const deletedLaptopId: LaptopInfos =
       await laptopInfosModel.findByIdAndDelete(laptopID);
     if (!deletedLaptopId) throw new HttpException(400, "Laptop doesn't exist");
     return deletedLaptopId;
-
-    // ---------> delete all records in db <--------------
-    await laptopInfosModel.deleteMany();
-    return {} as LaptopInfos;
   }
+
   public async updateOne(
     laptopID: string,
     laptopInfos: UpdateLaptopDto,
