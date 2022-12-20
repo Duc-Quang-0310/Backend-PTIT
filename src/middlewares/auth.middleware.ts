@@ -23,8 +23,10 @@ const authMiddleware = async (
         Authorization,
         secretKey,
       ) as DataStoredInToken;
-      const userId = verificationResponse._id;
-      const findUser = await userModel.findById(userId);
+      const findUser = await userModel.findOne({
+        email: verificationResponse.user,
+      });
+      console.log('findUser', findUser);
 
       if (findUser) {
         req.user = findUser;
