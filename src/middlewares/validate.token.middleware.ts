@@ -39,7 +39,7 @@ const validateRefreshTokenInfo = async (
   }
 
   return {
-    success: false,
+    success: true,
     user: currentUser,
   };
 };
@@ -68,9 +68,9 @@ const validateExpireToken = async (
       if (type === TokenType.REFRESH) {
         const passAllCase = await validateRefreshTokenInfo(userEmail, jwtToken);
         if (!passAllCase.success) {
-          req['user'] = passAllCase?.user || {};
           return next(new HttpException(401, `${type} Token Expired`));
         }
+        req['user'] = passAllCase?.user || {};
       }
       return next();
     } catch (error) {
