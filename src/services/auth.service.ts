@@ -96,7 +96,6 @@ class AuthService {
           env.jwtSecret,
           {
             algorithm: 'HS512',
-            noTimestamp: true,
             expiresIn: env.jwtExpiredRefreshTokenTime,
           },
         );
@@ -161,8 +160,12 @@ class AuthService {
     return !!findUser;
   }
 
-  public async genNewToken(user: User): Promise<string> {
-    return this.generateToken(user.email, TokenType.ACCESS);
+  public async genNewToken(user: User) {
+    const accessToken = await this.generateToken(user.email, TokenType.ACCESS);
+
+    const refreshToken = await this.generateRefreshToken(user);
+
+    return { accessToken, refreshToken };
   }
 
   public async getAllProfileContent(): Promise<Profiles[]> {

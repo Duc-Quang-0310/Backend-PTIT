@@ -79,10 +79,10 @@ class AuthController {
   ) => {
     try {
       const user = req.user;
-      const token = await this.authService.genNewToken(user);
-      res.status(200).json({
-        token,
-      });
+      const { accessToken, refreshToken } = await this.authService.genNewToken(
+        user,
+      );
+      res.status(200).json({ accessToken, refreshToken });
     } catch (error) {
       next(error);
     }
